@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+
+</head>
+<link rel="stylesheet" href="/about.css">
+<link rel="stylesheet" href="/navbar.css">
+<link rel="stylesheet" href="/footer.css">
+<link rel="stylesheet" href="/style.css">
+
+
+<body>
+
+    <%- include("navbar") %>
+
+
+        <% if (user) { %>
+
+            <div class="login-status success">
+                <span>✅</span>
+                <h5>You are logged in</h5>
+            </div>
+
+            <% } else { %>
+
+                <div class="login-status danger">
+                    <span>⚠️</span>
+                    <h5>You are not logged in</h5>
+                </div>
+
+                <% } %>
+
+
+                    <main class="main-content">
+
+                        <div class="about-container">
+
+                            <h1>About URL Shortener</h1>
+
+                            <p>
+                                This URL Shortener project is built using
+                                Node.js, Express.js, MongoDB, EJS, JWT and bcrypt.
+                                It allows users to create short links securely.
+                            </p>
+
+                            <p>
+                                Registered users can log in, generate short URLs,
+                                and manage their links.
+                            </p>
+
+
+                            <div class="features">
+
+                                <h2>Features</h2>
+
+                                <ul>
+                                    <li>🔗 Short URL Generation</li>
+                                    <li>👤 User Registration & Login</li>
+                                    <li>🔐 JWT Authentication</li>
+                                    <li>🔒 Password Hashing with bcrypt</li>
+                                    <li>💾 MongoDB Database</li>
+                                    <li>⚡ Fast Redirect System</li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+
+                    </main>
+
+
+                    <%- include("footer") %>
+
+</body>
+
+</html>

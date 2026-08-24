@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="min-h-screen bg-slate-100 flex items-center justify-center px-4 py-8">
+
+    <main class="w-full max-w-md rounded-2xl bg-white p-5 sm:p-7 shadow-[0_0_20px_rgba(0,0,0,0.2)]">
+
+        <!-- Header -->
+        <div class="flex w-full flex-col items-center justify-center">
+
+            <div class="mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-blue-50">
+                <img src="/images/forgot-password-icon.png" alt="Verify OTP" class="h-14 w-14 object-contain">
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-900">
+                Verify OTP
+            </h1>
+
+            <p class="mt-2 text-center text-sm text-gray-500">
+                Enter the 6-digit code sent to your registered email
+            </p>
+
+        </div>
+
+
+        <!-- Form -->
+        <form action="/verify-OTP" method="POST" id="otpForm" class="mt-7 flex flex-col gap-5">
+
+
+            <!-- OTP Boxes -->
+            <div class="flex w-full justify-center gap-2 sm:gap-3">
+
+                <input type="text" id="otp1" name="otp1" maxlength="1" inputmode="numeric" autocomplete="one-time-code"
+                    class="otp-input h-10 w-10 rounded-lg border-2 border-gray-300 bg-gray-50 text-center text-xl font-bold text-gray-800 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 sm:h-14 sm:w-12">
+
+                <input type="text" id="otp2" name="otp2" maxlength="1" inputmode="numeric"
+                    class="otp-input h-10 w-10 rounded-lg border-2 border-gray-300 bg-gray-50 text-center text-xl font-bold text-gray-800 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 sm:h-14 sm:w-12">
+
+                <input type="text" id="otp3" name="otp3" maxlength="1" inputmode="numeric"
+                    class="otp-input h-10 w-10 rounded-lg border-2 border-gray-300 bg-gray-50 text-center text-xl font-bold text-gray-800 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 sm:h-14 sm:w-12">
+
+                <input type="text" id="otp4" name="otp4" maxlength="1" inputmode="numeric"
+                    class="otp-input h-10 w-10 rounded-lg border-2 border-gray-300 bg-gray-50 text-center text-xl font-bold text-gray-800 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 sm:h-14 sm:w-12">
+
+                <input type="text" id="otp5" name="otp5" maxlength="1" inputmode="numeric"
+                    class="otp-input h-10 w-10 rounded-lg border-2 border-gray-300 bg-gray-50 text-center text-xl font-bold text-gray-800 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 sm:h-14 sm:w-12">
+
+                <input type="text" id="otp6" name="otp6" maxlength="1" inputmode="numeric"
+                    class="otp-input h-10 w-10 rounded-lg border-2 border-gray-300 bg-gray-50 text-center text-xl font-bold text-gray-800 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100 sm:h-14 sm:w-12">
+
+            </div>
+
+
+            <!-- Hidden Complete OTP -->
+            <input type="hidden" name="otp" id="otp">
+
+
+            <div id="error-message" class="space-y-2">
+                <% errors.forEach(error=> { %>
+
+                    <p class="rounded-lg border-l-4 border-red-600 bg-red-100 p-3 text-sm font-medium text-red-700">
+                        <i class="fa-solid fa-circle-exclamation mr-1"></i>
+                        <%= error %>
+                    </p>
+
+                    <% }) %>
+            </div>
+
+
+            <!-- Verify Button -->
+            <button type="submit"
+                class="w-full rounded-xl border-2 border-blue-700 bg-blue-600 p-3 text-sm font-semibold text-white shadow-md transition-all duration-300 hover:bg-blue-700 hover:shadow-lg active:scale-[0.98]">
+
+                <i class="fa-solid fa-shield-halved mr-2"></i>
+
+                Verify OTP
+
+            </button>
+
+
+            <!-- Resend -->
+            <div class="text-center text-sm text-gray-500">
+
+                <p>
+                    Didn't receive the code?
+                </p>
+
+                <a href="/forget-password" id="resendBtn" disabled
+                    class="mt-1 font-semibold text-blue-600 disabled:cursor-not-allowed disabled:text-gray-400">
+
+                    Resend OTP
+
+                    <span id="timer">
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- Back -->
+            <a href="/forget-password"
+                class="text-center text-sm font-medium text-gray-600 transition hover:text-blue-600">
+
+                <i class="fa-solid fa-arrow-left mr-1"></i>
+
+                Back to email
+
+            </a>
+
+
+            <!-- Security -->
+            <div class="flex items-center justify-center text-xs text-gray-500">
+
+                <i class="fa-solid fa-lock text-blue-700"></i>
+
+                <p class="pl-2">
+                    Your OTP is secure and will expire shortly.
+                </p>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <!-- OTP JavaScript -->
+    <script>
+        const expiryTime = "<%= expiryTime || '' %>";
+
+        const timer = document.getElementById("timer");
+        const resendBtn = document.getElementById("resendBtn");
+
+        const expiry = new Date(expiryTime).getTime();
+
+        if (isNaN(expiry)) {
+
+            timer.textContent = "00:00";
+            resendBtn.disabled = false;
+
+        } else {
+
+            const countdown = setInterval(() => {
+
+                const now = Date.now();
+
+                const remaining = expiry - now;
+
+                if (remaining <= 0) {
+
+                    clearInterval(countdown);
+
+                    timer.textContent = "00:00";
+                    resendBtn.disabled = false;
+
+                    return;
+                }
+
+                const totalSeconds = Math.floor(remaining / 1000);
+
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+
+                timer.textContent =
+                    `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+            }, 1000);
+        }
+
+        //==========Error hide ==========
+
+        const errorHide = document.getElementById("error-message")
+
+        if (errorHide) {
+            setTimeout(() => {
+                errorHide.style.display = "none";
+            }, 3000)
+        }
+
+
+        // ================OTP INPUT==========================
+
+        const inputs = document.querySelectorAll(".otp-input");
+
+        const hiddenOtp = document.getElementById("otp");
+
+        const form = document.getElementById("otpForm");
+
+
+        // ==========================================
+        // UPDATE COMPLETE OTP
+        // ==========================================
+
+        function updateOTP() {
+
+            let otp = "";
+
+            inputs.forEach(input => {
+                otp += input.value;
+            });
+
+            hiddenOtp.value = otp;
+        }
+
+
+        // ==========================================
+        // INPUT HANDLING
+        // ==========================================
+
+        inputs.forEach((input, index) => {
+
+            input.addEventListener("input", () => {
+
+                // Only numbers
+                input.value = input.value.replace(/\D/g, "");
+
+                // Move next
+                if (
+                    input.value &&
+                    index < inputs.length - 1
+                ) {
+
+                    inputs[index + 1].focus();
+
+                }
+
+                updateOTP();
+
+            });
+
+
+            // ==========================================
+            // BACKSPACE
+            // ==========================================
+
+            input.addEventListener("keydown", (e) => {
+
+                if (
+                    e.key === "Backspace" &&
+                    !input.value &&
+                    index > 0
+                ) {
+
+                    inputs[index - 1].focus();
+
+                }
+
+            });
+
+
+            // ==========================================
+            // PASTE OTP
+            // ==========================================
+
+            input.addEventListener("paste", (e) => {
+
+                e.preventDefault();
+
+                const pastedData =
+                    e.clipboardData
+                        .getData("text")
+                        .replace(/\D/g, "")
+                        .slice(0, 6);
+
+
+                pastedData
+                    .split("")
+                    .forEach((digit, i) => {
+
+                        if (inputs[i]) {
+
+                            inputs[i].value = digit;
+
+                        }
+
+                    });
+
+
+                updateOTP();
+
+
+                // Focus last filled box
+                const focusIndex =
+                    Math.min(
+                        pastedData.length,
+                        inputs.length - 1
+                    );
+
+                inputs[focusIndex].focus();
+
+            });
+
+        });
+
+
+        // ==========================================
+        // FORM SUBMIT
+        // ==========================================
+
+        form.addEventListener("submit", (e) => {
+
+            updateOTP();
+
+            // OTP must contain 6 digits
+            if (hiddenOtp.value.length !== 6) {
+
+                e.preventDefault();
+
+                alert("Please enter complete 6-digit OTP.");
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>

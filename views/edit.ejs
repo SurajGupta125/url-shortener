@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit URL</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="/edit.css">
+
+</head>
+
+<body>
+
+    <%- include("navbar") %>
+
+        <% if (user) { %>
+
+            <div class="login-status success">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>You are logged in</span>
+            </div>
+
+            <% } else { %>
+
+                <div class="login-status danger">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                    <span>You are not logged in</span>
+                </div>
+
+                <% } %>
+
+                    <div class="container">
+
+                        <h1>
+                            <i class="fa-solid fa-pen-to-square"></i>
+                            Edit URL
+                        </h1>
+
+                        <form action="/edit/<%= link._id %>" method="POST">
+
+                            <div class="form-group">
+                                <label>Original URL</label>
+                                <input type="url" name="url" value="<%= link.url %>" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Short Code</label>
+                                <input type="text" name="shortCode" value="<%= link.shortCode %>" required>
+                            </div>
+
+                            <button type="submit" class="update-btn">
+                                <i class="fa-solid fa-floppy-disk"></i>
+                                Update URL
+                            </button>
+
+                        </form>
+
+                        <a href="/" class="back-btn">
+                            <i class="fa-solid fa-arrow-left"></i>
+                            Back to Home
+                        </a>
+
+                    </div>
+
+                    <%- include("footer") %>
+
+</body>
+
+</html>

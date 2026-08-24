@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<link rel="stylesheet" href="/register.css">
+<link rel="stylesheet" href="/navbar.css">
+<link rel="stylesheet" href="/login.css">
+<link rel="stylesheet" href="/footer.css">
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+
+
+
+<body>
+    <%- include("navbar") %>
+
+        <% if (user) { %>
+
+            <div class="login-status success">
+                <i class="fa-solid fa-circle-check mr-1"></i>
+                <h5>You are logged in</h5>
+            </div>
+
+            <% } else { %>
+
+                <div class="login-status danger">
+                    <span>⚠️</span>
+                    <h5>You are not logged in</h5>
+                </div>
+
+                <% } %>
+
+                    <section class="register-section">
+
+                        <div class="register-card">
+
+                            <h2>Create Account</h2>
+                            <p class="Register">Register to manage your shortened URLs.</p>
+
+                            <form action="/register" method="POST">
+
+                                <div class="input-group">
+                                    <label>Full Name</label>
+                                    <input type="text" name="name" placeholder="Enter your full name" required>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Email</label>
+                                    <input type="email" name="email" placeholder="Enter your email" required>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" id="currentPassword"
+                                        placeholder="Enter your password" required>
+                                    <i class="fa-regular fa-eye" onclick="togglePassword('currentPassword', this)"></i>
+                                </div>
+
+                                <% if (errors && errors.length> 0) { %>
+
+                                    <% errors.forEach((error)=> { %>
+                                        <p class="error-message">
+                                            <%= error %>
+                                        </p>
+                                        <% }) %>
+
+                                            <% } %>
+
+                                                <button type="submit">
+                                                    Register
+                                                </button>
+
+                            </form>
+
+                            <p class="login-link">
+                                Already have an account?
+                                <a href="/login">Login</a>
+                            </p>
+
+                        </div>
+
+                    </section>
+
+                    <%- include("footer") %>
+                        <script src="/password.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,281 @@
+/* ===========================
+   About Container
+=========================== */
+
+.about-container {
+    width: 90%;
+    max-width: 800px;
+
+    margin: 0 auto;
+    padding: 35px;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+/* ===========================
+   Heading
+=========================== */
+
+.about-container h1 {
+    margin-bottom: 25px;
+
+    text-align: center;
+
+    color: #2563eb;
+
+    font-size: 30px;
+}
+
+
+/* ===========================
+   Paragraph
+=========================== */
+
+.about-container p {
+    margin-bottom: 18px;
+
+    color: #4b5563;
+
+    font-size: 16px;
+
+    line-height: 1.8;
+}
+
+
+/* ===========================
+   Features
+=========================== */
+
+.features {
+    margin-top: 30px;
+}
+
+.features h2 {
+    margin-bottom: 18px;
+
+    color: #333;
+
+    font-size: 22px;
+}
+
+
+/* ===========================
+   Feature List
+=========================== */
+
+.features ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+.features ul li {
+    padding: 10px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    color: #374151;
+
+    font-size: 15px;
+}
+
+.features ul li:last-child {
+    border-bottom: none;
+}
+
+
+/* ===========================
+   1024px
+=========================== */
+
+@media (max-width: 1024px) {
+
+    .about-container {
+        width: 85%;
+        max-width: 750px;
+
+        padding: 30px;
+    }
+
+    .about-container h1 {
+        font-size: 28px;
+    }
+
+    .about-container p {
+        font-size: 15px;
+    }
+}
+
+
+/* ===========================
+   768px
+=========================== */
+
+@media (max-width: 768px) {
+
+    .about-container {
+        width: 92%;
+
+        padding: 25px;
+
+        margin: 0 auto;
+    }
+
+    .about-container h1 {
+        font-size: 25px;
+
+        margin-bottom: 20px;
+    }
+
+    .about-container p {
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+    .features {
+        margin-top: 25px;
+    }
+
+    .features h2 {
+        font-size: 20px;
+    }
+
+    .features ul li {
+        font-size: 14px;
+
+        padding: 9px 0;
+    }
+}
+
+
+/* ===========================
+   480px
+=========================== */
+
+@media (max-width: 480px) {
+
+    .about-container {
+        width: 94%;
+
+        padding: 20px;
+
+        border-radius: 10px;
+    }
+
+    .about-container h1 {
+        font-size: 22px;
+    }
+
+    .about-container p {
+        font-size: 13px;
+
+        line-height: 1.6;
+    }
+
+    .features h2 {
+        font-size: 18px;
+    }
+
+    .features ul li {
+        font-size: 13px;
+
+        padding: 8px 0;
+    }
+}
+
+
+/* ===========================
+   375px
+=========================== */
+
+@media (max-width: 375px) {
+
+    .about-container {
+        width: 95%;
+
+        padding: 17px;
+    }
+
+    .about-container h1 {
+        font-size: 20px;
+    }
+
+    .about-container p {
+        font-size: 12px;
+    }
+
+    .features h2 {
+        font-size: 17px;
+    }
+
+    .features ul li {
+        font-size: 12px;
+    }
+}
+
+
+/* ===========================
+   1920px
+=========================== */
+
+@media (min-width: 1920px) {
+
+    .about-container {
+        max-width: 900px;
+
+        padding: 45px;
+    }
+
+    .about-container h1 {
+        font-size: 34px;
+    }
+
+    .about-container p {
+        font-size: 18px;
+    }
+
+    .features h2 {
+        font-size: 25px;
+    }
+
+    .features ul li {
+        font-size: 17px;
+    }
+}
+
+
+/* ===========================
+   4K - 2560px
+=========================== */
+
+@media (min-width: 2560px) {
+
+    .about-container {
+        max-width: 1000px;
+
+        padding: 50px;
+    }
+
+    .about-container h1 {
+        font-size: 38px;
+    }
+
+    .about-container p {
+        font-size: 20px;
+    }
+
+    .features h2 {
+        font-size: 28px;
+    }
+
+    .features ul li {
+        font-size: 19px;
+    }
+}

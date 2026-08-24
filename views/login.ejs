@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/navbar.css">
+    <link rel="stylesheet" href="/login.css">
+    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.0/css/all.min.css">
+</head>
+
+<body>
+
+    <%- include("navbar") %>
+
+        <% if (user) { %>
+
+            <div class="login-status success">
+                <span>✅</span>
+                <h5>You are logged in</h5>
+            </div>
+
+            <% } else { %>
+
+                <div class="login-status danger">
+                    <span>⚠️</span>
+                    <h5>You are not logged in</h5>
+                </div>
+
+                <% } %>
+
+                    <section class="login-section">
+
+                        <div class="login-card">
+
+                            <h2>Welcome Back 👋</h2>
+                            <p class="login">Login to manage your shortened URLs.</p>
+
+                            <form action="/login" method="POST">
+
+                                <div class="input-group input-1">
+                                    <label>Email</label>
+                                    <input type="email" name="email" placeholder="Enter your email" required>
+                                </div>
+
+                                <div class="input-group">
+                                    <label>Password</label>
+                                    <input type="password" name="password" id="currentPassword"
+                                        placeholder="Enter your password" required>
+                                    <i class="fa-regular fa-eye" onclick="togglePassword('currentPassword', this)"></i>
+                                </div>
+
+                                <a class="forget-password" href="/forget-password">forget password?</a>
+
+                                <% if (errors && errors.length> 0) { %>
+
+                                    <% errors.forEach((error)=> { %>
+                                        <p class="error-message">
+                                            <%= error %>
+                                        </p>
+                                        <% }) %>
+
+                                            <% } %>
+                                                <button class="login-btn" type="submit">
+                                                    Login
+                                                </button>
+
+                            </form>
+                            <form action="/auth/google" class="login-google" method="get">
+                                <button type="submit">
+                                    <img src="/images/Logo-google.png" alt="">
+                                    Continue with Google
+                                </button>
+                            </form>
+                            <p class="register-link">
+                                Don't have an account?
+                                <a href="/register">Create account</a>
+                            </p>
+
+                        </div>
+
+                    </section>
+
+                    <%- include("footer") %>
+                        <script src="/password.js"></script>
+</body>
+
+</html>

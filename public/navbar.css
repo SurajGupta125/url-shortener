@@ -1,0 +1,91 @@
+/* Specific Reset for Navbar only */
+.navbar, 
+.navbar * {
+    box-sizing: border-box;
+}
+
+.navbar {
+    width: 100%;
+    min-height: 70px;
+    background: #1f2937;
+    display: flex;
+    align-items: center;
+    padding: 0 5%;
+    color: white;
+}
+
+.navbar .logo {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.navbar .nav-links {
+    margin-left: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    list-style: none;
+}
+
+.navbar .nav-links li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-links li a:hover {
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        min-height: auto;
+        padding: 16px 5%;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .navbar .logo {
+        font-size: 22px;
+    }
+
+    .navbar .nav-links {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+        gap: 22px;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 14px 4%;
+    }
+
+    .navbar .logo {
+        font-size: 20px;
+    }
+
+    .navbar .nav-links {
+        gap: 15px;
+    }
+
+    .navbar .nav-links li a {
+        font-size: 14px;
+    }
+}
