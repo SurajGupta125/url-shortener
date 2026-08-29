@@ -19,23 +19,22 @@
 
     <% if (user) { %>
 
-        <div
-            class="text-green-700 w-1/7 absolute t-5 l-5  border bg-green-50 font-semibold border-green-600 p-2 mt-5 ml-5 rounded">
-            <i class="fa-solid fa-circle-check mr-1"></i>
-            You are logged in
-        </div>
-
-        <% } else { %>
-
-            <div class="text-red-600 bg-red-100 px-4 py-2 rounded">
-                <i class="fa-solid fa-circle-xmark mr-2"></i>
-                You are not logged in
+        <% if (user) { %>
+            <div class="mt-5 ml-5 w-43.5 rounded border border-green-600 bg-green-50 p-2 font-semibold text-green-700">
+                <i class="fa-solid fa-circle-check mr-1"></i>
+                You are logged in
             </div>
+            <% } else { %>
+
+                <div class="text-red-600 bg-red-100 px-4 py-2 rounded">
+                    <i class="fa-solid fa-circle-xmark mr-2"></i>
+                    You are not logged in
+                </div>
+                <% } %>
 
             <% } %>
 
                 <main class="flex-1 flex items-center justify-center p-4  flex-col">
-
 
                     <!-- <a href="/"
                     class="absolute top-5 left-10 bg-blue-500 text-white border border-blue-700 py-1 px-2 rounded text-2xl">Home</a> -->
@@ -135,7 +134,7 @@
                                                 <div class="flex justify-start mt-4">
 
                                                     <button type="submit"
-                                                        class="bg-blue-600 hover:bg-blue-700 text-white py-1.5 px-3 rounded cursor-pointer">
+                                                        class="bg-blue-600 hover:bg-blue-700 text-white py-1.5  px-3 rounded cursor-pointer">
 
                                                         <i class="fa-solid fa-circle-check"></i>
                                                         Verify Now
@@ -143,7 +142,7 @@
                                                     </button>
 
                                                     <a href="/profile"
-                                                        class="bg-blue-600 hover:bg-blue-700 ml-2 text-white py-1.5 px-3 rounded cursor-pointer">
+                                                        class="bg-blue-600 hover:bg-blue-700 ml-2 text-white py-1.5 max-[323px]:px-2 px-3 rounded cursor-pointer">
 
                                                         <i class="fa-solid fa-user"></i>
                                                         Profile

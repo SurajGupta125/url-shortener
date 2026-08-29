@@ -20,6 +20,8 @@ import { editProfileData } from "./profile_data_validate.js";
 import { validatePassword } from "./changePasswordValiadate.js";
 import { ObjectId } from "mongodb";
 import { sendResetVerificationEmail } from "./resetEmail.js";
+import { upload } from "./config/multer.js";
+import cloudinary from "./config/cloudenery.js";
 
 
 // ================= Register Page =================
@@ -635,6 +637,57 @@ export const newPass = async (req, res) => {
     }
 }
 
+//============ Upload User Profile Image =============
+
+export const uploadProfilePicture = async (req, res) => {
+    try {
+        const user = await collection.findOne({_id: req.user._id})
+        if (!user) {
+            return res.redirect('/login')
+        }
+        if (!req.file) {
+            return res.status(400).send('Please select an image')
+        }
+
+        const result = await new Promise((resolve, reject) => {
+
+            const stream = cloudinary.uploader.upload_stream(
+                {
+                    folder: 'profile_pictures'
+                },
+                (error, result) => {
+
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(result)
+                    }
+                }
+            )
+
+            stream.end(req.file.buffer)
+        })
+
+        await collection.updateOne(
+            {
+                _id: req.user._id
+            },
+            {
+                $set: {
+                    profileImage: result.secure_url
+                }
+            }
+        )
+
+        res.redirect('/profile')
+
+    } catch (err) {
+
+        console.log(err)
+        res.status(500).send('Image upload failed')
+
+    }
+}
 //=================== forget Password ==================
 
 export const forgetPassword = (req, res) => {

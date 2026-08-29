@@ -14,8 +14,7 @@
 <body class="m-0 p-0 min-h-screen flex flex-col">
     <%- include("navbar") %>
         <% if (user) { %>
-            <div
-                class="mt-5 ml-5 w-43.5 rounded border border-green-600 bg-green-50 p-2 font-semibold text-green-700">
+            <div class="mt-5 ml-5 w-43.5 rounded border border-green-600 bg-green-50 p-2 font-semibold text-green-700">
                 <i class="fa-solid fa-circle-check mr-1"></i>
                 You are logged in
             </div>
@@ -26,37 +25,66 @@
                     You are not logged in
                 </div>
                 <% } %>
-                    <main class="flex-1 w-full flex justify-center items-center px-4 py-8 min-[768px]:max-w-3xl min-[768px]:mx-auto flex-col">
+                    <main
+                        class="flex-1 w-full flex justify-center items-center px-4 py-8 min-[768px]:max-w-3xl min-[768px]:mx-auto flex-col">
                         <div class="w-full max-w-3xl min-[768px]:max-w-2xl p-4 mt-0 shadow-[0_0_20px_rgba(0,0,0,0.4)]">
                             <div class="flex flex-col justify-center items-center">
                                 <p class="text-3xl text-blue-800 font-semibold">Your Profile</p>
                                 <p>Manage your account and profile information</p>
                             </div>
-                            <div class="mt-4">
+                            <div class="mt-4 p-2">
                                 <div class="bg-blue-600 p-3.5 rounded-t-2xl">
-                                    <div class="flex flex-wrap md:justify-start md:gap-0 justify-center gap-3 space-x-10 items-center">
-                                        <div
-                                            class="h-20 flex items-center  rounded-full justify-center text-4xl text-white font-semibold border w-20">
-                                            <%= user.name[0].toUpperCase() %>
+
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-5">
+
+                                        <!-- Upload Form -->
+                                        <div class="w-full sm:w-auto">
+                                            <form action="/profile" method="post" enctype="multipart/form-data"
+                                                class="m-0 w-full flex flex-col gap-3">
+                                                <img src="<%= user.profileImage || '/images/profile.png' %>"
+                                                    alt="Profile"
+                                                    class="h-24 w-24 max-[426px]:m-auto flex items-center justify-center rounded-full text-4xl text-white font-semibold border">
+                                                </img>
+                                                <input type="file" name="profileImage"
+                                                    class="border-blue-800 text-[12px] rounded-xl p-2 cursor-pointer bg-white">
+                                                <button type="submit" class="border-blue-800 text-[12px] rounded-xl font-bold hover:border-blue-700 hover:bg-blue-500 hover:text-white p-2 bg-white text-blue-600">Upload Image
+                                                </button>
+                                            </form>
                                         </div>
-                                        <div class="text-md text-white">
-                                            <h2>
-                                                <i class="fa-solid fa-user"></i>
-                                                <%= user.name %>
-                                            </h2>
-                                            <p>
-                                                <i class="fa-solid fa-envelope"></i>
-                                                <span class="break-all">
-                                                    <%= user.email %>
-                                                </span>
-                                            </p>
-                                            <p class>
-                                                <i class="fa-solid fa-calendar"></i>
-                                                <span>
-                                                    Member Since
-                                                    <%= new Date(user.createdAt).toLocaleDateString("en-GB") %>
-                                                </span>
-                                            </p>
+                                        <div class=" overflow-x-auto">
+                                            <table class="w-full text-left text-white">
+                                                <tbody>
+                                                    <tr class="border-b flex flex-wrap border-white/20">
+                                                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
+                                                            <i class="fa-solid fa-user mr-2"></i>
+                                                            Name
+                                                        </th>
+                                                        <td class="py-3 break-all">
+                                                            <%= user.name %>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr class="border-b flex flex-wrap border-white/20">
+                                                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
+                                                            <i class="fa-solid fa-envelope mr-2"></i>
+                                                            Email
+                                                        </th>
+                                                        <td class="py-3 break-all">
+                                                            <%= user.email %>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr  class="border-b flex flex-wrap border-white/20">
+                                                        <th class="py-3 pr-6 font-semibold whitespace-nowrap">
+                                                            <i class="fa-solid fa-calendar mr-2"></i>
+                                                            Member Since
+                                                        </th>
+                                                        <td class="py-3 whitespace-nowrap">
+                                                            <%= new Date(user.createdAt).toLocaleDateString("en-GB") %>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
@@ -144,6 +172,8 @@
                             </div>
                     </main>
                     <%- include("footer") %>
+
+                        <!-- Preview Image  -->
 </body>
 
 </html>

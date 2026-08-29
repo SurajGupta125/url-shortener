@@ -20,23 +20,17 @@ import {
     resetPassword,
     checkRegisterdEmail,
     forgetOTPRECIVE,
-    resetOldPassword
+    resetOldPassword,
+    uploadProfilePicture,
 } from "./authController.js";
 
-import {
-    verifyAuthentication,
-    createSession,
-    createAccessToken,
-    createRefreshToken
-} from "./jwtToken.js";
+import {verifyAuthentication,createSession,createAccessToken,createRefreshToken} from "./jwtToken.js";
 
-import {
-    ACCESS_TOKEN_EXPIRY,
-    REFRESH_TOKEN_EXPIRY
-} from "./constants.js";
+import {ACCESS_TOKEN_EXPIRY,REFRESH_TOKEN_EXPIRY} from "./constants.js";
 
 // import { verifyAuthentication } from "./jwtToken.js";
 import passport from "passport";
+import { upload } from "./config/multer.js";
 
 const router = express.Router();
 
@@ -58,23 +52,11 @@ router.get("/profile", verifyAuthentication, profile);
 
 // ================= Email Verification =================
 
-router.get(
-    "/email-verification",
-    verifyAuthentication,
-    getEmailVerificationPage
-);
+router.get("/email-verification",verifyAuthentication,getEmailVerificationPage);
 
-router.post(
-    "/send-verification-code",
-    verifyAuthentication,
-    emailVerification
-);
+router.post("/send-verification-code",verifyAuthentication,emailVerification);
 
-router.post(
-    "/verify-email",
-    verifyAuthentication,
-    verifyEmail
-);
+router.post("/verify-email",verifyAuthentication,verifyEmail);
 
 //============ Edit Profile =================
 
@@ -91,6 +73,10 @@ router.get('/change-password', verifyAuthentication, changePassword)
 //============== Post Change Password ===========
 
 router.post('/change-password', verifyAuthentication, newPass)
+
+//============== Upload Profile Picture =============
+
+router.post('/profile',verifyAuthentication, upload.single("profileImage"),uploadProfilePicture)
 
 //============== forget Password ===========
 
@@ -115,6 +101,7 @@ router.get('/reset-password', resetPassword)
 //============== Reset Password =============
 
 router.post('/reset-password', resetOldPassword)
+
 
 //============== Continue with Google =============
 
