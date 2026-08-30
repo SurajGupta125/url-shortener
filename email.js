@@ -1,17 +1,9 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false, 
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendVerificationEmail = async (email, code) => {
     try {
@@ -19,12 +11,11 @@ export const sendVerificationEmail = async (email, code) => {
         if (!targetEmail) {
             throw new Error("Target email address is missing");
         }
-        
-        const info = await transporter.sendMail({
-            from: `"URL Shortener" <${process.env.EMAIL_USER}>`,
+
+        const data = await resend.emails.send({
+            from: 'onboarding@resend.dev', // Resend testing default sender
             to: targetEmail,
-            subject: "Verify Your Email",
-            text: `Your OTP is: ${code}`,
+            subject: 'Verify Your Email',
             html: `
             <div style="font-family: Arial, sans-serif; padding: 20px;">
                 <h2>Email Verification</h2>
@@ -34,8 +25,8 @@ export const sendVerificationEmail = async (email, code) => {
             `
         });
 
-        console.log("Email Sent Successfully to:", targetEmail, "ID:", info.messageId);
-        return info;
+        console.log("Email Sent Successfully via Resend API:", data);
+        return data;
     } catch (error) {
         console.error("EXACT EMAIL ERROR:", error.message || error);
         throw error;
