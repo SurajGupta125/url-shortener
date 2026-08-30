@@ -1,30 +1,28 @@
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
+import { Resend } from 'resend';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
-});
-
 export const sendResetVerificationEmail = async (email, otp, userName) => {
+    try {
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
+            throw new Error("RESEND_API_KEY is missing in environment variables");
+        }
 
-    const mailOptions = {
-        from: `"URL-Shortener" <${process.env.EMAIL_USER}>`,
-        to: email,
-        subject: "Reset Your Password - OTP",
+        const resend = new Resend(apiKey);
+        const targetEmail = email ? email.trim() : "";
 
-        html: `
+        const data = await resend.emails.send({
+            from: 'onboarding@resend.dev',
+            to: targetEmail,
+            subject: 'Reset Your Password - OTP',
+            html: `
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
-                <meta name="viewport"
-                      content="width=device-width, initial-scale=1.0">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
             </head>
 
             <body style="
@@ -69,7 +67,7 @@ export const sendResetVerificationEmail = async (email, otp, userName) => {
                             color:#374151;
                             font-size:15px;
                         ">
-                            Hi <strong>${userName}</strong>,
+                            Hi <strong>${userName || 'User'}</strong>,
                         </p>
 
                         <p style="
@@ -163,21 +161,14 @@ export const sendResetVerificationEmail = async (email, otp, userName) => {
 
             </body>
             </html>
-        `
-    };
+            `
+        });
 
-    try {
-
-        const info = await transporter.sendMail(mailOptions);
-
-        console.log("Email sent successfully:", info.messageId);
-
-        return info;
+        console.log("Reset Email sent successfully via Resend:", data);
+        return data;
 
     } catch (error) {
-
-        console.error("Email sending error:", error);
-
+        console.error("Reset Email sending error:", error.message || error);
         throw error;
     }
 };
