@@ -7,6 +7,8 @@
   "type": "module",
   "main": "pathModule.js",
   "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind": "tailwindcss -i ./src/input.css -o ./public/css/output.css --watch"
   },
@@ -21,7 +23,7 @@
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "jsonwebtoken": "^9.0.3",
-    "mongodb": "^7.5.0",
+    "mongodb": "^7.6.0",
     "mongoose": "^9.8.0",
     "multer": "^2.2.0",
     "mysql2": "^3.23.1",
