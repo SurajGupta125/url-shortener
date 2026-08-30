@@ -3,17 +3,19 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export const sendVerificationEmail = async (email, code) => {
     try {
-        const targetEmail = email ? email.trim() : "";
-        if (!targetEmail) {
-            throw new Error("Target email address is missing");
+        const apiKey = process.env.RESEND_API_KEY;
+        if (!apiKey) {
+            throw new Error("RESEND_API_KEY is missing in environment variables");
         }
 
+        // Resend yahan initialize hoga (Function ke andar)
+        const resend = new Resend(apiKey);
+        const targetEmail = email ? email.trim() : "";
+
         const data = await resend.emails.send({
-            from: 'onboarding@resend.dev', // Resend testing default sender
+            from: 'onboarding@resend.dev',
             to: targetEmail,
             subject: 'Verify Your Email',
             html: `
