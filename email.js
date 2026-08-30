@@ -1,19 +1,22 @@
-import nodemailer from 'nodemailer'
-import dotenv from 'dotenv'
+import nodemailer from 'nodemailer';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
-    port: 465,
-    secure: true, 
+    port: 587,
+    secure: false, 
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     },
     tls: {
-        rejectUnauthorized: false 
-    }
+        rejectUnauthorized: false
+    },
+    connectionTimeout: 10000, // 10 seconds timeout limit
+    greetingTimeout: 5000,
+    socketTimeout: 10000
 });
 
 export const sendVerificationEmail = async (email, code) => {
@@ -53,7 +56,7 @@ Email Verification
 <td style="padding:35px;">
 
 <h2 style="margin-top:0;color:#111827;">
-Hello 👋
+Hello User
 </h2>
 
 <p style="font-size:16px;color:#4b5563;line-height:1.7;">
