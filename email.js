@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
+    service: 'gmail',
     host: "smtp.gmail.com",
     port: 587,
     secure: false, 
@@ -14,16 +15,22 @@ const transporter = nodemailer.createTransport({
     tls: {
         rejectUnauthorized: false
     },
-    connectionTimeout: 10000, // 10 seconds timeout limit
+    connectionTimeout: 10000,
     greetingTimeout: 5000,
     socketTimeout: 10000
 });
 
 export const sendVerificationEmail = async (email, code) => {
     try {
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
-            to: email,
+        // Recipient email check & clean up
+        const targetEmail = email ? email.trim() : "";
+        if (!targetEmail) {
+            throw new Error("Target email address is missing or invalid");
+        }
+
+        const info = await transporter.sendMail({
+            from: `"URL Shortener" <${process.env.EMAIL_USER}>`,
+            to: targetEmail,
             subject: "Verify Your Email",
             html: `
 <!DOCTYPE html>
@@ -123,9 +130,9 @@ Secure Authentication System
 `
         });
 
-        console.log("Email Sent Successfully");
+        console.log(`Email Sent Successfully to ${targetEmail}. Message ID: ${info.messageId}`);
 
     } catch (error) {
-        console.log("Email sending error:", error);
+        console.log("Email sending error:", error.message || error);
     }
 };
