@@ -1,4 +1,3 @@
-
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -15,16 +14,17 @@ dotenv.config();
 const app = express();
 
 // ==================================================
-// 1. BODY PARSER
+// 1. BODY PARSER (LIMIT INCREASED TO 10MB)
 // ==================================================
 
 app.use(
     express.urlencoded({
+        limit: "10mb",
         extended: true
     })
 );
 
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 
 
 // ==================================================
@@ -114,5 +114,5 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 7000;
 
 app.listen(PORT, "0.0.0.0", () => {
-    console.log(`🚀 Server running on port ${PORT}`);
+    console.log(` Server running on port ${PORT}`);
 });
